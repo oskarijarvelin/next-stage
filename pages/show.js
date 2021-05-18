@@ -37,6 +37,7 @@ function createData(mita, kuka, milloin, kesto) {
 }
 
 const rows = [
+    createData('Loadin', '', '', '-'),
     createData('Lähetys alkaa', '', '16:45', '-'),
     createData('Avaus', 'Erja Sankari', '17:00', 5),
     createData('Alkujuonto', 'Jari Tuovinen', '17:05', 1),
