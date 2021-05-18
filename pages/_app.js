@@ -18,8 +18,9 @@ export default function MyApp(props) {
   return (
     <React.Fragment>
       <Head>
-        <title>My page</title>
+        <title>Kevätforum 2021</title>
         <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
+        <meta name="robots" content="noindex" />
       </Head>
       <ThemeProvider theme={theme}>
         <CssBaseline />

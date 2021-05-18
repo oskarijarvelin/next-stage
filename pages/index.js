@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { Container, Typography, Box } from '@material-ui/core'
-import Kello from '../components/kello'
 import Link from '../src/Link'
 import Moment from 'react-moment'
 import moment from 'moment'
@@ -25,6 +24,8 @@ function createData(mita, kuka, milloin, kesto) {
 }
 
 const rows = [
+    createData('Testi', '', '00:01', '-'),
+    createData('Testi2', '', '00:06', '-'),
     createData('Loadin', '', '01:11', '-'),
     createData('Lähetys alkaa', '', '16:45', '-'),
     createData('Avaus', 'Erja Sankari', '17:00', 5),
@@ -37,17 +38,34 @@ const rows = [
     createData('Palkinnot', 'Tiina Koskela', '18:55', 10),
     createData('Kiitokset', 'Jari Tuovinen', '19:05', 1),
     createData('Lähetys loppuu', '', '19:06', '-'),
+    createData('Vuorokausi loppuu', '', '23:59', '-'),
 ]
 
 export default function Index() {
     const classes = useStyles()
     const [time, setTime] = useState( new Date() )
+    const [live, setLive] = useState( 0 )
+
     let today = moment().format('YYYY-MM-DD')
+
     useEffect(() => {
         setInterval(() => {
-            setTime( new Date() )
+            let date = new Date()
+            setTime( date )
+            setCurrent( date )
         }, 1000);
     }, [])
+
+    function setCurrent( date ) {
+        for ( let i = 0; i < rows.length; i++) {
+            if ( moment(today + 'T' + rows[i].milloin + '+0300') > moment(date) && i > 0) {
+                setLive(i - 1)
+                break
+            }
+        }
+    }
+
+  
 
     const cdFilter = (d) => {
         if ( d.charAt(0) == '-' && d.length < 10 ) {
@@ -63,6 +81,16 @@ export default function Index() {
             <Box my={4}>
                 <Typography variant="h4" component="h1" gutterBottom>
                     Kevätforum 2021
+                </Typography>
+
+                <Typography gutterBottom>
+                    <Link href="https://global.gotowebinar.com/join/3246089693121433612/935358543?clientType=html5" target="_blank" rel="nofollow">Katso lähetystä</Link>{' - '} 
+                    <Link href="/kenraali">Aikataulu (kenraali)</Link>{' - '}
+                    <Link href="/show">Aikataulu (show)</Link>
+                </Typography>
+
+                <Typography gutterBottom>
+                    LIVE: {rows[live].mita}
                 </Typography>
 
                 <TableContainer component={Paper}>
