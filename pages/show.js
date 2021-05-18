@@ -37,9 +37,6 @@ function createData(mita, kuka, milloin, kesto) {
 }
 
 const rows = [
-    createData('Testi', '', '00:01', '-'),
-    createData('Testi2', '', '00:06', '-'),
-    createData('Loadin', '', '01:11', '-'),
     createData('Lähetys alkaa', '', '16:45', '-'),
     createData('Avaus', 'Erja Sankari', '17:00', 5),
     createData('Alkujuonto', 'Jari Tuovinen', '17:05', 1),
@@ -51,8 +48,6 @@ const rows = [
     createData('Palkinnot', 'Tiina Koskela', '18:55', 10),
     createData('Kiitokset', 'Jari Tuovinen', '19:05', 1),
     createData('Lähetys loppuu', '', '19:06', '-'),
-    createData('Vuorokausi testi', '', '23:19', '-'),
-    createData('Vuorokausi loppuu', '', '23:59', '-'),
 ]
 
 export default function Index() {
@@ -60,17 +55,20 @@ export default function Index() {
     const [time, setTime] = useState( new Date() )
     const [live, setLive] = useState( 0 )
     const [next, setNext] = useState( 0 )
+    const [showText, setShowText] = useState( true )
+    const [lastMinute, setLastMinute] = useState( false )
 
     const today = moment().format('YYYY-MM-DD')
     //const today = '2021-05-19'
 
-    useEffect(() => {
-        setInterval(() => {
-            let date = new Date()
-            setTime( date )
-            setCurrent( date )
-        }, 1000);
-    }, [])
+    
+    setInterval(() => {
+        let date = new Date()
+        setTime( date )
+        setCurrent( date )
+        blink( date )
+    }, 1000);
+    
 
     function setCurrent( date ) {
         for ( let i = 0; i < rows.length; i++) {
@@ -83,6 +81,12 @@ export default function Index() {
                 }
                 break
             }
+        }
+    }
+
+    function blink( date ) {
+        if ( lastMinute ) {
+            setShowText( !showText )
         }
     }
 
@@ -107,12 +111,12 @@ export default function Index() {
                     </Link>
                 </Toolbar>
             </AppBar>
-            <Container maxWidth="false">
+            <Container maxWidth={false}>
                 <Box mt={8} mb={16}>
                     <Typography className={classes.live}>
                         {rows[live].mita}
                     </Typography>
-                    <Typography className={classes.countdown}>
+                    <Typography className={classes.countdown} style={{ color: showText ? 'inherit' : '#F00' }}>
                         <Moment date={today + 'T' + rows[next].milloin + '+0300'}  filter={cdFilter} format="HH:mm:ss" durationFromNow />
                     </Typography>
                     <Typography className={classes.next}>
