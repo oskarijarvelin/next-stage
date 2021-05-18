@@ -1,17 +1,9 @@
 import { useState, useEffect } from 'react';
-import { AppBar, Toolbar, Container, Typography, Box, Button } from '@material-ui/core'
+import { AppBar, Toolbar, Container, Typography, Box, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles';
 import Link from '../src/Link'
 import Moment from 'react-moment'
 import moment from 'moment'
-
-import { makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
 
 const useStyles = makeStyles({
     title: {
@@ -22,6 +14,21 @@ const useStyles = makeStyles({
     },
     buttonTop: {
         color: '#FFF',
+    },
+    live: {
+        fontSize: '7vw',
+        lineHeight: 1,
+        textAlign: 'center',
+    },
+    countdown: {
+        fontSize: '24vw',
+        lineHeight: 1.2,
+        textAlign: 'center',
+    },
+    next: {
+        fontSize: '3vw',
+        lineHeight: 1,
+        textAlign: 'center',
     }
 })
 
@@ -44,6 +51,7 @@ const rows = [
     createData('Palkinnot', 'Tiina Koskela', '18:55', 10),
     createData('Kiitokset', 'Jari Tuovinen', '19:05', 1),
     createData('Lähetys loppuu', '', '19:06', '-'),
+    createData('Vuorokausi testi', '', '23:19', '-'),
     createData('Vuorokausi loppuu', '', '23:59', '-'),
 ]
 
@@ -51,8 +59,10 @@ export default function Index() {
     const classes = useStyles()
     const [time, setTime] = useState( new Date() )
     const [live, setLive] = useState( 0 )
+    const [next, setNext] = useState( 0 )
 
-    let today = moment().format('YYYY-MM-DD')
+    const today = moment().format('YYYY-MM-DD')
+    //const today = '2021-05-19'
 
     useEffect(() => {
         setInterval(() => {
@@ -64,18 +74,21 @@ export default function Index() {
 
     function setCurrent( date ) {
         for ( let i = 0; i < rows.length; i++) {
-            if ( moment(today + 'T' + rows[i].milloin + '+0300') > moment(date) && i > 0) {
-                setLive(i - 1)
+            if ( moment(today + 'T' + rows[i].milloin + '+0300') > moment(date) ) {
+                if ( i > 0) {
+                    setLive(i - 1)
+                    setNext(i)
+                } else {
+                    setNext(0)
+                }
                 break
             }
         }
     }
 
-  
-
     const cdFilter = (d) => {
         if ( d.charAt(0) == '-' && d.length < 10 ) {
-            return d.toUpperCase();
+            return d.toUpperCase().substring(1);
         } else {
             return '';
         }
@@ -94,21 +107,22 @@ export default function Index() {
                     </Link>
                 </Toolbar>
             </AppBar>
+            <Container maxWidth="false">
+                <Box mt={8} mb={16}>
+                    <Typography className={classes.live}>
+                        {rows[live].mita}
+                    </Typography>
+                    <Typography className={classes.countdown}>
+                        <Moment date={today + 'T' + rows[next].milloin + '+0300'}  filter={cdFilter} format="HH:mm:ss" durationFromNow />
+                    </Typography>
+                    <Typography className={classes.next}>
+                        SEURAAVAKSI: {rows[next].mita}
+                    </Typography>
+                </Box>
+            </Container>
             <Container maxWidth="lg">
-                <Box my={4}>
-                    <Typography variant="h4" component="h1" gutterBottom>
-                        Kevätforum 2021
-                    </Typography>
-
-                    <Typography gutterBottom>
-                        <Link href="/">Takaisin</Link>
-                    </Typography>
-
-                    <Typography gutterBottom>
-                        LIVE: {rows[live].mita}
-                    </Typography>
-
-                    <TableContainer component={Paper}>
+                <Box mb={8}>
+                    <TableContainer>
                         <Table className={classes.table} size="small" aria-label="simple table">
                             <TableHead>
                                 <TableRow>
