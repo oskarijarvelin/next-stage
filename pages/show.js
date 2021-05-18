@@ -77,7 +77,7 @@ export default function Index() {
                     setLive(i - 1)
                     setNext(i)
                 } else {
-                    setNext(0)
+                    setNext(1)
                 }
                 break
             }
