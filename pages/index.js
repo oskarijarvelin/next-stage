@@ -26,7 +26,7 @@ export default function Index() {
             <AppBar position="static">
                 <Toolbar>
                     <Typography variant="h6" className={classes.title}>
-                        Kevätforum 2021
+                        Viestintäpäivä Plussa
                     </Typography>
                     <Link href="/show" passHref>
                         <Button className={classes.buttonTop}>Aikataulu</Button>
@@ -36,14 +36,9 @@ export default function Index() {
             <Container maxWidth="md">
                 <Box my={16}>                    
                     <div className={classes.buttonContainer}>
-                        <Link href="https://global.gotowebinar.com/join/3246089693121433612/935358543?clientType=html5" passHref>
+                        <Link href="https://plussa.vercel.app/" passHref>
                             <Button variant="outlined" color="primary" size="large" className={classes.button}>
-                                Katso Testiwebinaaria
-                            </Button>
-                        </Link>
-                        <Link href="https://global.gotowebinar.com/join/8553821546714090256/493152834?clientType=html5" passHref>
-                            <Button variant="outlined" color="primary" size="large" className={classes.button}>
-                                Katso Kevätforumia
+                                Katso lähetystä
                             </Button>
                         </Link>
                         <Link href="/show" passHref>

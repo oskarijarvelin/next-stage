@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { AppBar, Toolbar, Container, Typography, Box, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@material-ui/core'
+import { useState } from 'react';
+import { AppBar, Toolbar, Container, Typography, Box, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 import Link from '../src/Link'
 import Moment from 'react-moment'
@@ -38,17 +38,19 @@ function createData(mita, kuka, milloin, kesto) {
 
 const rows = [
     createData('Loadin', '', '', '-'),
-    createData('Lähetys alkaa', '', '16:45', '-'),
-    createData('Avaus', 'Erja Sankari', '17:00', 5),
-    createData('Alkujuonto', 'Jari Tuovinen', '17:05', 1),
-    createData('Keynote 1', 'Juha Sipilä', '17:06', 19),
-    createData('Keynote 2', 'Jari Kähkönen', '17:25', 20),
-    createData('Yrityspuheenvuoro', 'Jouni Lukkarinen', '17:45', 15),
-    createData('Paneeli', 'Sanna Keskinen', '18:00', 45),
-    createData('OTH:n esittely', 'Marja Nousiainen', '18:45', 10),
-    createData('Palkinnot', 'Tiina Koskela', '18:55', 10),
-    createData('Kiitokset', 'Jari Tuovinen', '19:05', 1),
-    createData('Lähetys loppuu', '', '19:06', '-'),
+    createData('Lähetys alkaa', '', '08:45', 15),
+    createData('Avaus', 'Elina Melgin, Ulla Järvi, Harri Saukkomaa, Tuija Brax', '09:00', 60),
+    createData('Kommenttipuheenvuoro', 'Ilmari Hiltunen', '10:00', 20),
+    createData('Keskustelu', '', '10:20', 25),
+    createData('Kahvitauko', '', '10:45', 15),
+    createData('Nuoret kriisin keskiössä', 'Eirik Haglund, Tomi Kiilakoski', '11:00', 60),
+    createData('Lounas', '', '12:00', 60),
+    createData('Kriisi, yksilö ja median vastuu', 'Ulla Järvi, Heljä Salonen, Marjo Oikarinen', '13:00', 60),
+    createData('Suomi ja globaalit kriisit', 'Elina Melgin, Titta Maja, Mikko Koivumaa', '14:00', 45),
+    createData('Kahvitauko', '', '14:45', 25),
+    createData('Paneelikeskustelu', '', '15:10', 50),
+    createData('Päätössanat', '', '16:00', 15),
+    createData('Lähetys loppuu', '', '16:15', '-'),
 ]
 
 export default function Index() {
@@ -105,7 +107,7 @@ export default function Index() {
             <AppBar position="static">
                 <Toolbar>
                     <Typography variant="h6" className={classes.title}>
-                        Kevätforum 2021
+                        Viestintäpäivä Plussa
                     </Typography>
                     <Link href="/" passHref>
                         <Button className={classes.buttonTop}>Takaisin</Button>
